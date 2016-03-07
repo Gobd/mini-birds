@@ -1,3 +1,4 @@
+"use strict";
 var express = require('express');
 var cors = require('cors');
 var bodyParser = require('body-parser');
@@ -12,8 +13,8 @@ var ObjectID = require('mongodb').ObjectID;
 app.use(bodyParser.json());
 app.use(cors());
 
-app.post('/api/sighting', function(req, res, next){
-    collection.insert(req.body, function(err, resp){
+app.post('/api/sighting', function (req, res) {
+    collection.insert(req.body, function (err, resp) {
         if (err) {
             res.status(500).json(err);
         } else {
@@ -23,9 +24,9 @@ app.post('/api/sighting', function(req, res, next){
 
 });
 
-app.get('/api/sighting', function(req, res, next){
+app.get('/api/sighting', function (req, res) {
     var name = req.query.name;
-    collection.find({name: name}, function(err, resp){
+    collection.find({name: name}, function (err, resp) {
         if (err) {
             res.status(500).json(err);
         } else {
@@ -35,13 +36,13 @@ app.get('/api/sighting', function(req, res, next){
 
 });
 
-app.put('/api/sighting', function(req, res, next){
+app.put('/api/sighting', function (req, res) {
     var id = req.query.id;
     collection.update({'_id' : ObjectID(id)}, {
         name: req.body.name,
         order: req.body.order,
         status: req.body.status
-    }, function(err, resp){
+    }, function (err, resp) {
         if (err) {
             res.status(500).json(err);
         } else {
@@ -51,9 +52,9 @@ app.put('/api/sighting', function(req, res, next){
 
 });
 
-app.delete('/api/sighting', function(req, res, next){
+app.delete('/api/sighting', function (req, res) {
     var id = req.query.id;
-    collection.remove({'_id' : ObjectID(id)}, function(err, resp) {
+    collection.remove({'_id' : ObjectID(id)}, function (err, resp) {
         if (err) {
             res.status(500).json(err);
         } else {
@@ -63,6 +64,6 @@ app.delete('/api/sighting', function(req, res, next){
 
 });
 
-app.listen(port, function(){
+app.listen(port, function () {
     console.log('Listening on port: ' + port);
 });
